@@ -46,3 +46,17 @@ Resources:
           Properties:
             Path: /locations
             Method: GET
+  WeatherUpdateLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: book.api.WeatherUpdateLambda::handler
+      CodeUri: target/lambda.jar
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref LocationsTable
+      Events:
+        ApiEvents:
+          Type: Api
+          Properties:
+            Path: /event
+            Method: PUT
